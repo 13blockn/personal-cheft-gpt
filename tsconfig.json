@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6", // Set the target ECMAScript version
-    "module": "commonjs", // Set the module format
+    "target": "es6", // Set the target ECMAScript version - may need to set to es5
+    "module": "esnext", // Set the module format
     "strict": true, // Enable strict type checking
     "esModuleInterop": true, // Enable compatibility with CommonJS modules
     "outDir": "dist", // Set the output directory for compiled files
@@ -15,15 +15,16 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "noEmit": true
   },
   "include": [
-    "pages/**/*.ts"
+    "pages/**/*.ts",
+    "pages/**/*.tsx"
   ], // Specify the files to include in the compilation process
   "exclude": [
     "node_modules"
