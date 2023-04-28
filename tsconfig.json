@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es6", // Set the target ECMAScript version
+    "module": "commonjs", // Set the module format
+    "strict": true, // Enable strict type checking
+    "esModuleInterop": true, // Enable compatibility with CommonJS modules
+    "outDir": "dist", // Set the output directory for compiled files
+    "sourceMap": true // Generate source maps for easier debugging
+    ,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "pages/**/*.ts"
+  ], // Specify the files to include in the compilation process
+  "exclude": [
+    "node_modules"
+  ] // Specify the files to exclude from the compilation process
+}
