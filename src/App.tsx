@@ -1,11 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { simpleCall } from './api/generate';
+import { getSuperheroName } from './api/generate';
 
 function App() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
+  const [isClick, setIsClick] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isClick) {
+      //fetchGeneratedNames(text, setResponse);
+      getSuperheroName(text).then((value: string | undefined) => {
+        if (!value) {
+          setResponse('Sorry, we were unable to process your request');
+        } else {
+          setResponse(value);
+        }
+      }).catch((error: any) => setResponse(error.message));
+    }
+  }, [isClick]);
 
   return (
     <>
@@ -19,40 +34,39 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={async () => console.log(await simpleCall(text))}>
-          {text}
+        <button onClick={async () => setIsClick(true)}> 
+          Submit
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button onClick={async () => setIsClick(false)}> 
+          Clear
+        </button>
         <input type='text' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)}/>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {response ? <p>{response}</p> : <p>Click the button to fetch your pet's superhero names</p>}
     </>
   )
 }
-/*
-    try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ animal: animalInput }),
-      });
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
-      }
-
-      setResult(data.result);
-      setAnimalInput("");
-    } catch(error: any) {
-      // Consider implementing your own error handling logic here
-      console.error(error);
-      alert(error.message);
+// The below doesn't make sense since this isn't a nest.js server app
+const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<React.SetStateAction<string>>) => {
+  try {
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ animal: text }),
+    });
+    const data = await response.json();
+    if (response.status !== 200) {
+      throw data.error || new Error(`Request failed with status ${response.status}`);
     }
-      */
+
+    setResponse(data.result);
+  } catch(error: any) {
+    // Consider implementing your own error handling logic here
+    console.error(error);
+    alert(error.message);
+  }
+}
+
 export default App

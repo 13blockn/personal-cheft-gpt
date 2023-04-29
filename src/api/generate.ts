@@ -48,7 +48,7 @@ export default async function (req: any, res: any) {
   }
 }
 
-export async function simpleCall(input: string): Promise<string | undefined> {
+export async function getSuperheroName(input: string): Promise<string | undefined> {
     return (await openai.createCompletion({
         model: "text-davinci-003",
         prompt: generatePrompt(input),
