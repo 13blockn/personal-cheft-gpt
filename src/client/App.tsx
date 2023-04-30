@@ -10,10 +10,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch("/hello")
-      .then((response) => response.text())
-      .then((data) => setMessage(data))
-      .catch((error) => console.error(error));
+    fetchGeneratedNames('Oliver', setMessage);
   }, []);
 
   return (
@@ -31,9 +28,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          {message}
-        </p>
+        {message ? <p>{message}</p> : <p>Loading...</p>}
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
@@ -42,4 +37,27 @@ function App() {
   );
 }
 
+// Might be returning HTML instead of json...
+const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<React.SetStateAction<string>>) => {
+  try {
+    const response = await fetch("api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ animal: text }),
+    });
+    const data = await response.json();
+    // setResponse(data); If not json, use response.text above
+    if (response.status !== 200) {
+      throw data.error || new Error(`Request failed with status ${response.status}`);
+    }
+
+    setResponse(data.result);
+  } catch(error: any) {
+    // Consider implementing your own error handling logic here
+    console.error(error);
+    alert(error.message);
+  }
+}
 export default App;

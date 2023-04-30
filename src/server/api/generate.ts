@@ -1,11 +1,11 @@
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, //Still doesn't work with dotenv
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function (req: any, res: any) {
+export async function openAIGenerateAnimal (req: any, res: any) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
