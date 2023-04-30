@@ -1,17 +1,12 @@
 import "./App.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import reactLogo from "./assets/react.svg";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [message, setMessage] = useState('');
-
-
-  useEffect(() => {
-    fetchGeneratedNames('Oliver', setMessage);
-  }, []);
+  const [input, setInput] = useState('');
 
   return (
     <div className="App">
@@ -23,21 +18,23 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Welcome Ariel!</h1>
+      <h2>Please type in a cuisine</h2>
+      <input type="text" value={input} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)} />
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={async () => await fetchGeneratedNames(input, setMessage)}>
+          Submit
         </button>
-        {message ? <p>{message}</p> : <p>Loading...</p>}
+        {message ?
+        <div className='gptResponse'>
+            {message}
+        </div> :
+        <p/>}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   );
 }
 
-// Might be returning HTML instead of json...
 const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<React.SetStateAction<string>>) => {
   try {
     const response = await fetch("api/generate", {
@@ -48,7 +45,6 @@ const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<Rea
       body: JSON.stringify({ animal: text }),
     });
     const data = await response.json();
-    // setResponse(data); If not json, use response.text above
     if (response.status !== 200) {
       throw data.error || new Error(`Request failed with status ${response.status}`);
     }
