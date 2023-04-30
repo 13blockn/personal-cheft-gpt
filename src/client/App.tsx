@@ -1,11 +1,20 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import reactLogo from "./assets/react.svg";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [message, setMessage] = useState('');
+
+
+  useEffect(() => {
+    fetch("/hello")
+      .then((response) => response.text())
+      .then((data) => setMessage(data))
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <div className="App">
@@ -23,7 +32,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          {message}
         </p>
       </div>
       <p className="read-the-docs">
