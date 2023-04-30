@@ -1,10 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from "express";
 import ViteExpress from "vite-express";
 import { openAIGenerateAnimal } from "./api/generate";
-import dotenv from 'dotenv';
 
 const app = express();
-dotenv.config();
 
 app.get("/hello", (_, res) => {
   res.send("Hello Vite + React + TypeScript!");
