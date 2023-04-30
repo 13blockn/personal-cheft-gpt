@@ -2,18 +2,19 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from "express";
+import bodyParser from 'body-parser';
 import ViteExpress from "vite-express";
 import { openAIGenerateAnimal } from "./api/generate";
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get("/hello", (_, res) => {
   res.send("Hello Vite + React + TypeScript!");
 });
 
-// req.body is undefined
 app.post('/api/generate', (req: any, res: any) => {
-  req.body = { animal: 'Oliver' };
   openAIGenerateAnimal(req, res)
 });
 
