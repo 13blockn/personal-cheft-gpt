@@ -18,11 +18,11 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Welcome Ariel!</h1>
+      <h1 className='underline'>Welcome Ariel!</h1>
       <h2>Please type in a cuisine</h2>
       <input type="text" value={input} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)} />
       <div className="card">
-        <button onClick={async () => await fetchGeneratedNames(input, setMessage)}>
+        <button className='hover:bg-sky-200' onClick={async () => await fetchGeneratedNames(input, setMessage)}>
           Submit
         </button>
         {message ?
