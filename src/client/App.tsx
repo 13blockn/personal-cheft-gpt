@@ -1,40 +1,42 @@
 import "./App.css";
+import '../../dist/output.css';
 
 import { useState } from "react";
-
-import reactLogo from "./assets/react.svg";
+import TopMenu from "./TopMenu";
 
 function App() {
   const [message, setMessage] = useState('');
   const [input, setInput] = useState('');
 
   return (
-    <div className="App">
-      <div>
+    <div className="w-full">
+
+      <TopMenu />
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-      </div>
-      <h1 className='underline'>Welcome Ariel!</h1>
-      <h2>Please type in a cuisine</h2>
-      <input type="text" value={input} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)} />
-      <div className="card">
-        <button className='hover:bg-sky-200' onClick={async () => await fetchGeneratedNames(input, setMessage)}>
+      </div> */}
+      <div className="flex flex-col items-center w-full">
+        <div className='text-3xl'>Intro & Search</div>
+        <input className='border-4 rounded-lg border-stone-500 p-4 mt-2' type="text" value={input} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)} />
+        <button className='hover:bg-cyan-200 py-2 px-4 my-2 border-4 border-cyan-200' onClick={async () => await fetchGeneratedNames(input, setMessage)}>
           Submit
         </button>
-        {message ?
-        <div className='gptResponse'>
-            {message}
-        </div> :
-        <p/>}
+        <div className="card">
+          {message ?
+            <div className='max-w-sm text-left gptResponse'>
+              {message}
+            </div> :
+            <p />}
+        </div>
       </div>
     </div>
   );
 }
-
 const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<React.SetStateAction<string>>) => {
   try {
     const response = await fetch("api/generate", {
@@ -50,7 +52,7 @@ const fetchGeneratedNames = async (text: string, setResponse: React.Dispatch<Rea
     }
 
     setResponse(data.result);
-  } catch(error: any) {
+  } catch (error: any) {
     // Consider implementing your own error handling logic here
     console.error(error);
     alert(error.message);

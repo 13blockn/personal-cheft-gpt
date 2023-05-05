@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "NODE_ENV=production ts-node src/server/main.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "build:tailwind": "tailwindcss src/client/app.css -o dist/output.css",
+    "watch:tailwind": "tailwindcss -w src/client/app.css -o dist/output.css"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
