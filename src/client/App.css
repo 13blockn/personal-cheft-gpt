@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .w-448 {
+    width: 448px;
+  }
+}
 
 .logo {
   height: 6em;

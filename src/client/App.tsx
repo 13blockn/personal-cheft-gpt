@@ -8,32 +8,30 @@ function App() {
   const [message, setMessage] = useState('');
   const [input, setInput] = useState('');
 
+  // Justify items stretch not working yet FYI
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col bg-gray-200 items-center justify-center">
 
-      <TopMenu />
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div> */}
-      <div className="flex flex-col items-center w-full">
-        <div className='text-3xl'>Intro & Search</div>
-        <input className='border-4 rounded-lg border-stone-500 p-4 mt-2' type="text" value={input} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)} />
-        <button className='hover:bg-cyan-200 py-2 px-4 my-2 border-4 border-cyan-200' onClick={async () => await fetchGeneratedNames(input, setMessage)}>
-          Submit
+      {/* <TopMenu /> */}
+      <div className="flex flex-col items-center bg-white rounded-lg shadow-lg p-6 my-6 w-448 max-w-md">
+        <span className='text-3xl font-semibold'>Welcome to CHEFT</span>
+        <span className='text-xl px-2'>Search a cuisine type to get recipe ideas</span>
+        <input className='rounded-md py-1 px-3 border border-gray-200' type="text" placeholder="Search a cuisine type" value={input} onChange={
+          (event: React.ChangeEvent<HTMLInputElement>) => setInput(event?.target.value)
+        } />
+        <button className='text-sm font-semibold m-2 rounded-lg bg-indigo-500 text-white' onClick={async () => await fetchGeneratedNames(input, setMessage)}>
+          Get Recipes
         </button>
-        <div className="card">
-          {message ?
-            <div className='max-w-sm text-left gptResponse'>
-              {message}
-            </div> :
-            <p />}
-        </div>
       </div>
+      {message ?
+      <div className="flex flex-col bg-white rounded-lg shadow-lg p-6 mb-6 w-448 max-w-md">
+        <span className='text-xl font-semibold'> Recipes </span>
+        <span className='font-light'> Here are a few recipes based on "{input}" </span>
+        <div className='max-w-sm text-left gptResponse'>
+          {message}
+        </div>
+      </div> :
+      <p/>}
     </div>
   );
 }

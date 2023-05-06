@@ -2,8 +2,9 @@ import React from "react";
 // import { Link } from "react-router-dom"; //TODO: add routing
 
 function TopMenu() {
+    // TODO untangle nav pieces so logo can be centered while line items are right aligned
     return (
-<nav className="flex justify-between items-center bg-slate-200 m-6">
+<nav className="flex justify-between items-center my-6">
   <div className="flex items-center ml-3">
     <span className="text-2xl font-bold">Cheft</span>
   </div>
